@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+
+<main class="container auth-container">
+  
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="logo auth-logo">
+        <div class="logo-icon">R</div>
+        Ryzen<span>Nodes</span>
+      </div>
+      <h2 class="auth-title">Administrator Portal</h2>
+      <p class="auth-subtitle">Sign in to manage the RyzenNodes blog and announcements.</p>
+    </div>
+
+    <!-- Error Alert Box -->
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-danger">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span><%= error %></span>
+      </div>
+    <% } %>
+
+    <form action="/admin/login" method="POST">
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" id="username" name="username" class="form-input" placeholder="e.g. admin" required autocomplete="username">
+      </div>
+      
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" name="password" class="form-input" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required autocomplete="current-password">
+      </div>
+      
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px; padding: 12px 20px;">
+        <i class="fa-solid fa-right-to-bracket" style="margin-right: 6px;"></i> Authenticate Session
+      </button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 24px;">
+      <a href="/" class="post-back-link" style="margin-bottom: 0; font-size: 0.8rem;">
+        <i class="fa-solid fa-house"></i> Return to Homepage
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>

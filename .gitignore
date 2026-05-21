@@ -1,0 +1,15 @@
+# Dependency directories
+node_modules/
+
+# Local databases
+*.db
+blog.db
+
+# Environmental variables
+.env
+.env.local
+
+# Session log tasks or background task artifacts
+.system_generated/
+task-*.log
+*.tmp

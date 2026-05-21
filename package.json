@@ -1,0 +1,19 @@
+{
+  "name": "ryzennodes-blog",
+  "version": "1.0.0",
+  "description": "Premium KVM VPS Blogging Platform for RyzenNodes",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "marked": "^12.0.2",
+    "sqlite3": "^5.1.7"
+  }
+}

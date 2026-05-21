@@ -1,0 +1,121 @@
+<%- include('partials/header') %>
+
+<main class="container">
+  
+  <!-- Announcement / Error message if any -->
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-danger">
+      <i class="fa-solid fa-circle-exclamation"></i> <%= error %>
+    </div>
+  <% } %>
+
+  <!-- A. Featured Post Banner -->
+  <% if (featuredPost) { %>
+    <section class="featured-container">
+      <div class="featured-card">
+        <div class="featured-image-wrapper">
+          <img src="<%= featuredPost.cover_image || 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80' %>" 
+               alt="<%= featuredPost.title %>" class="featured-image">
+          <div class="featured-image-overlay"></div>
+        </div>
+        <div class="featured-content">
+          <div class="featured-meta">
+            <span class="badge badge-<%= featuredPost.category.toLowerCase() %>"><%= featuredPost.category %></span>
+            <span>&bull;</span>
+            <span><i class="fa-regular fa-clock"></i> <%= featuredPost.read_time %> min read</span>
+          </div>
+          <h1 class="featured-title"><%= featuredPost.title %></h1>
+          <p class="featured-excerpt">
+            <%= featuredPost.content.replace(/[#*`_\-\[\]\(\)]/g, '').substring(0, 180) %>...
+          </p>
+          <div class="featured-footer">
+            <div class="author-block">
+              <div class="author-avatar"><%= featuredPost.author.charAt(0).toUpperCase() %></div>
+              <div>
+                <div class="author-name"><%= featuredPost.author %></div>
+                <div class="post-date"><%= new Date(featuredPost.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></div>
+              </div>
+            </div>
+            <a href="/blog/<%= featuredPost.slug %>" class="btn btn-secondary">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  <% } %>
+
+  <!-- B. Toolbar: Search Bar & Tabs -->
+  <section class="toolbar-container">
+    <div class="filter-tabs">
+      <a href="/?<%= searchQuery ? 'q=' + searchQuery : '' %>" 
+         class="tab-btn <%= activeCategory === '' ? 'active' : '' %>">All Posts</a>
+      
+      <% categories.forEach(cat => { %>
+        <a href="/?category=<%= encodeURIComponent(cat) %><%= searchQuery ? '&q=' + encodeURIComponent(searchQuery) : '' %>" 
+           class="tab-btn <%= activeCategory === cat ? 'active' : '' %>"><%= cat %></a>
+      <% }) %>
+    </div>
+    
+    <div class="search-wrapper">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" class="search-input" placeholder="Search articles..." value="<%= searchQuery %>">
+    </div>
+  </section>
+
+  <!-- C. Recent Grid of Posts -->
+  <section>
+    <h2 class="grid-title">
+      <% if (activeCategory) { %>
+        <%= activeCategory %> Articles
+      <% } else if (searchQuery) { %>
+        Search Results for "<%= searchQuery %>"
+      <% } else { %>
+        Recent Publications
+      <% } %>
+    </h2>
+
+    <div class="posts-grid">
+      <% if (posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+          <article class="post-card">
+            <div class="card-image-wrapper">
+              <a href="/blog/<%= post.slug %>">
+                <img src="<%= post.cover_image || 'https://images.unsplash.com/photo-1591453089816-0fbb971b454c?auto=format&fit=crop&w=600&q=80' %>" 
+                     alt="<%= post.title %>" class="card-image">
+              </a>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="badge badge-<%= post.category.toLowerCase() %>"><%= post.category %></span>
+                <span>&bull;</span>
+                <span><%= post.read_time %> min read</span>
+              </div>
+              <h3 class="card-title">
+                <a href="/blog/<%= post.slug %>"><%= post.title %></a>
+              </h3>
+              <p class="card-excerpt">
+                <%= post.content.replace(/[#*`_\-\[\]\(\)]/g, '').substring(0, 120) %>...
+              </p>
+              <div class="card-footer">
+                <div class="author-block">
+                  <div class="author-avatar" style="width: 28px; height: 28px; font-size: 0.8rem;"><%= post.author.charAt(0).toUpperCase() %></div>
+                  <span class="author-name" style="font-size: 0.85rem;"><%= post.author %></span>
+                </div>
+                <span class="post-date"><%= new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) %></span>
+              </div>
+            </div>
+          </article>
+        <% }) %>
+      <% } else { %>
+        <div class="no-posts">
+          <i class="fa-regular fa-folder-open" style="font-size: 3rem; margin-bottom: 16px; color: var(--text-muted);"></i>
+          <h3>No articles found</h3>
+          <p style="color: var(--text-muted); margin-top: 8px;">Try modifying your search query or selecting a different category.</p>
+          <a href="/" class="btn btn-secondary" style="margin-top: 20px;">Clear Filters</a>
+        </div>
+      <% } %>
+    </div>
+  </section>
+  
+</main>
+
+<%- include('partials/footer') %>

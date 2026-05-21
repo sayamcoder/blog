@@ -1,0 +1,118 @@
+<%- include('partials/header') %>
+
+<article class="container">
+  
+  <!-- Post Header & Breadcrumbs -->
+  <header class="post-detail-header">
+    <a href="/" class="post-back-link">
+      <i class="fa-solid fa-arrow-left"></i> Back to Insights
+    </a>
+    
+    <div class="post-header-meta">
+      <span class="badge badge-<%= post.category.toLowerCase() %>"><%= post.category %></span>
+      <span style="color: var(--text-muted);">&bull;</span>
+      <span style="color: var(--text-secondary);"><i class="fa-regular fa-clock"></i> <%= post.read_time %> min read</span>
+    </div>
+    
+    <h1 class="post-detail-title"><%= post.title %></h1>
+    
+    <div class="post-author-bar">
+      <div class="author-block">
+        <div class="author-avatar"><%= post.author.charAt(0).toUpperCase() %></div>
+        <div>
+          <div class="author-name"><%= post.author %></div>
+          <div class="post-date">Published on <%= new Date(post.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %></div>
+        </div>
+      </div>
+      
+      <!-- Quick Share options (esthetic) -->
+      <div style="display: flex; gap: 12px; color: var(--text-muted);">
+        <span style="font-size: 0.85rem; align-self: center;">Share:</span>
+        <a href="#" class="footer-social-link"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#" class="footer-social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#" class="footer-social-link"><i class="fa-solid fa-link"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Featured Cover Image -->
+  <img src="<%= post.cover_image || 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80' %>" 
+       alt="<%= post.title %>" class="post-detail-cover">
+
+  <!-- Content & Sidebar Layout -->
+  <div class="post-detail-wrapper">
+    
+    <!-- Rendered Markdown Body -->
+    <div class="post-content-body">
+      <%- post.htmlContent %>
+    </div>
+    
+    <!-- Blog Sidebar -->
+    <aside class="post-sidebar-section">
+      <div class="sidebar-box">
+        <h4><i class="fa-solid fa-server" style="color: var(--accent-orange); margin-right: 8px;"></i> RyzenNodes VPS</h4>
+        <p class="sidebar-cta-text">Experience enterprise-grade hosting nodes powered by AMD Ryzen 9 7950X processors, fast DDR5 RAM, and ultra-low latency network.</p>
+        
+        <div style="margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;">
+            <span style="color: var(--text-secondary);">Processor</span>
+            <span style="color: var(--text-primary); font-weight: 600;">Ryzen 9 7950X</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;">
+            <span style="color: var(--text-secondary);">Virtualization</span>
+            <span style="color: var(--text-primary); font-weight: 600;">KVM (Isolated)</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;">
+            <span style="color: var(--text-secondary);">Storage</span>
+            <span style="color: var(--text-primary); font-weight: 600;">PCIe 4.0 NVMe</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+            <span style="color: var(--text-secondary);">DDoS Protection</span>
+            <span style="color: var(--text-primary); font-weight: 600;">Path.net (12 Tbps+)</span>
+          </div>
+        </div>
+        
+        <a href="#" class="btn btn-primary" style="width: 100%;">
+          Deploy VPS Now <i class="fa-solid fa-bolt" style="margin-left: 4px;"></i>
+        </a>
+      </div>
+    </aside>
+    
+  </div>
+
+  <!-- Related Articles Grid -->
+  <% if (relatedPosts && relatedPosts.length > 0) { %>
+    <section class="related-section">
+      <h3 class="grid-title" style="margin-bottom: 32px;">Related Insights</h3>
+      <div class="posts-grid">
+        <% relatedPosts.forEach(relPost => { %>
+          <article class="post-card">
+            <div class="card-image-wrapper" style="height: 160px;">
+              <a href="/blog/<%= relPost.slug %>">
+                <img src="<%= relPost.cover_image || 'https://images.unsplash.com/photo-1591453089816-0fbb971b454c?auto=format&fit=crop&w=600&q=80' %>" 
+                     alt="<%= relPost.title %>" class="card-image">
+              </a>
+            </div>
+            <div class="card-body" style="padding: 20px;">
+              <div class="card-meta" style="margin-bottom: 10px;">
+                <span class="badge badge-<%= relPost.category.toLowerCase() %>" style="font-size: 0.7rem;"><%= relPost.category %></span>
+                <span style="font-size: 0.75rem;">&bull;</span>
+                <span style="font-size: 0.75rem;"><%= relPost.read_time %> min read</span>
+              </div>
+              <h4 class="card-title" style="font-size: 1.15rem; margin-bottom: 10px;">
+                <a href="/blog/<%= relPost.slug %>"><%= relPost.title %></a>
+              </h4>
+              <div class="card-footer" style="padding-top: 12px; margin-top: auto;">
+                <span class="author-name" style="font-size: 0.8rem; color: var(--text-secondary);"><%= relPost.author %></span>
+                <span class="post-date" style="font-size: 0.75rem;"><%= new Date(relPost.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) %></span>
+              </div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+  <% } %>
+
+</article>
+
+<%- include('partials/footer') %>

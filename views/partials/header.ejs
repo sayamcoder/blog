@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'RyzenNodes Blog' %></title>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Prism.js Dark Syntax Highlighting Theme (Tomorrow Night) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Ambient background glow blobs -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <header>
+    <div class="container navbar">
+      <a href="/" class="logo">
+        <div class="logo-icon">R</div>
+        Ryzen<span>Nodes</span>
+      </a>
+
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="https://ryzennodes.vercel.app" class="nav-link">VPS Builder</a></li>
+        <li><a href="https://ryzennodes.vercel.app" class="nav-link">VPS Plans</a></li>
+        <li><a href="https://ryzennodes.vercel.app/datacenter.html" class="nav-link">Datacenter</a></li>
+        <li><a href="/" class="nav-link active">Blog</a></li>
+        <li><a href="https://ryzennodes.vercel.app/contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <% if (typeof user !== 'undefined' && user) { %>
+          <a href="/admin" class="btn btn-secondary">
+            <i class="fa-solid fa-gauge"></i> Dashboard
+          </a>
+          <a href="/admin/logout" class="btn btn-primary">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </a>
+        <% } else { %>
+          <a href="#" class="btn btn-secondary">Client Portal</a>
+          <a href="/admin" class="btn btn-primary">Admin Access</a>
+        <% } %>
+      </div>
+    </div>
+  </header>
